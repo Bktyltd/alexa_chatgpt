@@ -5,23 +5,23 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from flask import redirect
 
-# .env dosyasını yükle
+# Load environment variables from .env
 load_dotenv()
 
-# OpenAI client
+# Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
 
-# Debug için loglama
+# Enable debug logging
 logging.basicConfig(level=logging.DEBUG)
 
-# Oturumlara göre sohbet geçmişi
+# Conversation history per session
 conversations = {}
 
 
 def build_response(output_text, should_end_session=False, reprompt=None):
-    """Alexa yanıt formatını oluştur"""
+    """Build Alexa-compatible response format"""
     response = {
         "version": "1.0",
         "response": {
@@ -38,17 +38,23 @@ def build_response(output_text, should_end_session=False, reprompt=None):
         }
     return response
 
+
 @app.route("/alexa-chat/health", methods=["GET"])
 def alexa_health_check():
+    """Health check endpoint for Alexa integration"""
     return jsonify({"status": "healthy", "service": "alexa-chat"})
+
 
 @app.route("/alexa-chat/", methods=["POST", "GET"])
 def alexa_chat_slash():
+    """Alias route with trailing slash"""
     return alexa_chat()
-    
+
+
 @app.route("/alexa-chat", methods=["POST", "GET"])
 @app.route("/alexa-chat/", methods=["POST", "GET"])
 def alexa_chat():
+    """Main Alexa skill endpoint"""
     if request.method == "GET":
         return "Alexa Skill Endpoint is working!"
 
@@ -61,9 +67,9 @@ def alexa_chat():
         session_id = session.get("sessionId", "default")
         app.logger.info(f"Request type: {request_type}, Session: {session_id}")
 
-        # LaunchRequest - Skill açıldığında
+        # LaunchRequest - when the skill is opened
         if request_type == "LaunchRequest":
-            # Yeni oturum başlatıldığında sohbet geçmişini temizle
+            # Reset conversation history for a new session
             conversations[session_id] = [
                 {"role": "system", "content": "You are a helpful AI assistant."}
             ]
@@ -73,8 +79,7 @@ def alexa_chat():
                 reprompt="For example, say: what is Python?"
             ))
 
-        # IntentRequest - Her soruyu ChatGPT'ye yönlendir
-        # IntentRequest - Her soruyu ChatGPT'ye yönlendir
+        # IntentRequest - forward everything to ChatGPT
         elif request_type == "IntentRequest":
             intent = data["request"].get("intent", {})
             intent_name = intent.get("name", "")
@@ -83,17 +88,16 @@ def alexa_chat():
 
             app.logger.info(f"Intent: {intent_name}, Slots: {slots}")
 
-            # ChatIntent için UserInput slot'unu al
+            # For ChatIntent, extract UserInput slot
             if intent_name == "ChatIntent":
                 if "UserInput" in slots and slots["UserInput"].get("value"):
                     user_message = slots["UserInput"]["value"]
                 else:
                     user_message = "Hello, how can I help you?"
             
-            # FallbackIntent - anlaşılmayan ifadeler için
+            # Handle FallbackIntent - when Alexa doesn’t understand
             elif intent_name == "AMAZON.FallbackIntent":
-                # Fallback durumunda da ChatGPT'ye sor
-                user_text = data.get("request", {}).get("intent", {}).get("slots", {})
+                # Pass a default clarification message to ChatGPT
                 user_message = "Could you please explain that in a different way?"
 
             app.logger.info(f"Intent: {intent_name}, User message: {user_message}")
@@ -106,19 +110,19 @@ def alexa_chat():
                 ))
 
             if intent_name in ["AMAZON.CancelIntent", "AMAZON.StopIntent"]:
-                conversations.pop(session_id, None)  # geçmişi temizle
+                conversations.pop(session_id, None)  # clear history
                 return jsonify(build_response("Goodbye!", should_end_session=True))
 
-            # Sohbet geçmişini başlat/yükle
+            # Initialize conversation history if not already set
             if session_id not in conversations:
                 conversations[session_id] = [
                     {"role": "system", "content": "You are a helpful AI assistant."}
                 ]
 
-            # Kullanıcı mesajını ekle
+            # Add user message to history
             conversations[session_id].append({"role": "user", "content": user_message})
 
-            # OpenAI çağrısı
+            # Call OpenAI API
             try:
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
@@ -131,7 +135,7 @@ def alexa_chat():
                 if len(reply) > 300:
                     reply = reply[:297] + "..."
 
-                # Asistan cevabını geçmişe ekle
+                # Add assistant response to history
                 conversations[session_id].append({"role": "assistant", "content": reply})
 
                 app.logger.info(f"OpenAI response: {reply}")
@@ -144,12 +148,12 @@ def alexa_chat():
                     should_end_session=False
                 ))
 
-        # SessionEndedRequest
+        # SessionEndedRequest - when Alexa session ends
         elif request_type == "SessionEndedRequest":
-            conversations.pop(session_id, None)  # geçmişi temizle
+            conversations.pop(session_id, None)  # clear history
             return jsonify(build_response("Goodbye!", should_end_session=True))
 
-        # Unknown
+        # Unknown request type
         else:
             return jsonify(build_response(
                 "Sorry, I didn't understand. Please try again.",
@@ -166,6 +170,7 @@ def alexa_chat():
 
 @app.route("/health", methods=["GET"])
 def health_check():
+    """Generic health check endpoint"""
     return jsonify({"status": "healthy"})
 
 
