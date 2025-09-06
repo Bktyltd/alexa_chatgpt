@@ -1,0 +1,13 @@
+[Unit]
+Description=Alexa ChatGPT Flask Service
+After=network.target
+
+[Service]
+User=your-username
+WorkingDirectory=/home/your-username/alexa_chatgpt
+ExecStart=/home/your-username/alexa/bin/python /home/your-username/alexa_chatgpt/alexa_chatgpt.py
+Restart=always
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
