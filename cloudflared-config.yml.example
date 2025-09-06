@@ -1,0 +1,7 @@
+tunnel: <your-tunnel-id>
+credentials-file: /home/your-username/.cloudflared/<your-tunnel-id>.json
+
+ingress:
+  - hostname: alexa.yourdomain.com
+    service: http://127.0.0.1:5060
+  - service: http_status:404
