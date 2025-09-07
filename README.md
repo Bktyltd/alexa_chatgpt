@@ -1,3 +1,5 @@
+Live Project: https://github.com/Bktyltd/alexa_chatgpt
+
 # Alexa ChatGPT Skill – Amazon Alexa Custom Skill with OpenAI GPT  
 
 This project provides a **Flask-based backend** for an **Amazon Alexa Custom Skill** integrated with **OpenAI’s GPT models (ChatGPT)**.  
