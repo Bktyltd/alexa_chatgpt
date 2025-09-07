@@ -1,0 +1,127 @@
+# Alexa Skill Setup — Step-by-Step
+
+## 0) Prerequisites (quick checklist)
+- Your backend is reachable over HTTPS (e.g., `https://bktyconsultancy.co.uk/alexa-chat`) and returns a health check.
+- You have your **interaction model JSON** file ready (the one you’ll upload to Alexa).
+- You have an Amazon developer account: <https://developer.amazon.com/alexa/console/ask>.
+
+---
+
+## 1) Create the Skill
+1. Go to **Alexa Developer Console** → **Create Skill**.
+2. **Skill name:** e.g., `Chat with Me`.
+3. **Default language:** English (US). (You can add Turkish later.)
+4. **Choose a model:** **Custom**.
+5. **Choose a method to host your skill’s backend resources:** **Provision your own**.
+6. Click **Create skill**.
+
+---
+
+## 2) Import your Interaction Model (upload the JSON)
+1. In the left sidebar, open **Interaction Model → JSON Editor**.
+2. **Delete** any content in the editor.
+3. **Paste** the entire content of your *interaction model JSON file* (or click **Import** if you prefer uploading).
+4. Click **Save Model**, then click **Build Model** (wait for the build to complete).
+
+> Tip: Your model should include an intent such as `ChatIntent` with a slot `UserInput` of type `AMAZON.SearchQuery`, plus some sample utterances.
+
+---
+
+## 3) Set the Endpoint (your HTTPS URL)
+1. Go to **Build** tab → **Endpoint**.
+2. Under **Service Endpoint Type**, choose **HTTPS**.
+3. In **Default Region**, enter your endpoint URL (e.g., `https://bktyconsultancy.co.uk/alexa-chat`).
+4. **Certificate Type**:
+   - If your endpoint has a standard certificate from a trusted CA (Cloudflare/Let’s Encrypt), choose  
+     **“My development endpoint has a certificate from a trusted certificate authority”**.  
+   - If you’re using a wildcard subdomain and know it’s valid, you may choose the wildcard option.  
+   When in doubt, pick the **trusted certificate** option.
+5. Click **Save Endpoints**.
+
+---
+
+## 4) Enable Testing
+1. Switch to the **Test** tab (top bar).
+2. Toggle **Skill testing is enabled in** → **Development**.
+3. The **Alexa Simulator** opens on the right.
+
+---
+
+## 5) Test in the Alexa Simulator (two ways)
+
+### A. Two-turn (open then ask)
+1. Say/Type: **“Open chat with me.”**  
+   (This triggers a **LaunchRequest** and your skill’s welcome message.)
+2. Then ask a question:
+   - **English:** “What is Python?”, “Who is Alan Turing?”
+   - **Turkish:** “Yapay zeka nedir?”, “Londra hakkında bilgi ver.”
+
+### B. One-shot (direct)
+- Say/Type: **“Ask chat with me what is Python”**  
+- Or: **“Ask chat with me, Yapay zeka nedir?”**
+
+> If the skill says: **“I’m not quite sure how to help with that.”** it usually means the utterance did not match your intent. Ensure you added robust **sample utterances** and the slot type is `AMAZON.SearchQuery`. Also make sure you used the **invocation name** correctly (“open chat with me”, “ask chat with me …”).
+
+---
+
+## 6) Add Turkish (optional, recommended)
+1. Go to **Build → Language Settings** → **Add new language** → Select **Turkish (TR)**.
+2. Repeat **Step 2** (import/paste a Turkish-friendly interaction model).
+3. **Save Model** → **Build Model**.
+
+> You can keep one intent (e.g., `ChatIntent`) that works for both English and Turkish if you include multilingual samples.
+
+---
+
+## 7) Account Linking (not needed)
+- Your current setup doesn’t require Account Linking. Skip this step.
+
+---
+
+## 8) Live Devices (Echo, etc.)
+- On your Echo device, ensure you’re logged in with the **same Amazon account** used in Developer Console.
+- After enabling testing in **Development**, try directly:  
+  “Alexa, **open chat with me**.”
+
+---
+
+## 9) Publishing (optional)
+If you want to publish your skill:
+1. Go to **Distribute** tab.
+2. Fill out **Skill Details** (description, example phrases, testing instructions, privacy policy/terms if needed).
+3. Run **Validation** and **Submit for certification**.
+
+---
+
+## Troubleshooting Tips
+
+- **“I’m not quite sure how to help with that.”**  
+  - Ensure the **invocation name** is spoken exactly (e.g., “chat with me”).  
+  - Add more **sample utterances** under `ChatIntent` (cover common forms like “what is {UserInput}”, “{UserInput} nedir”, etc.).  
+  - Confirm the slot is `AMAZON.SearchQuery` (this allows free-form speech).  
+  - Make sure your endpoint returns success for POST requests and handles `LaunchRequest`, `IntentRequest`, `SessionEndedRequest`.
+
+- **Endpoint not called / 4xx or 5xx errors**  
+  - Verify HTTPS URL in **Endpoint** settings.  
+  - Check server logs for incoming requests.  
+  - Test with `curl`:
+    ```bash
+    curl -s -X POST https://your-domain/alexa-chat       -H "Content-Type: application/json"       -d '{"request": {"type": "LaunchRequest"}}'
+    ```
+    Expect a JSON response from your Flask app.
+
+- **Certificate errors**  
+  - Use the “trusted certificate authority” option if your certificate is standard.  
+  - Ensure your domain resolves correctly and serves HTTPS without redirects that break POST requests.
+
+---
+
+## Example Phrases (you can paste these into the Test tab)
+- **English:**  
+  - “Open chat with me.”  
+  - “Ask chat with me what is Python.”  
+  - “Ask chat with me to explain artificial intelligence.”  
+- **Turkish:**  
+  - “Chat with me’i aç.” (or use English invocation, then ask in Turkish)  
+  - “Chat with me’ye sor: Yapay zeka nedir?”  
+  - “Chat with me’ye sor: İstanbul hakkında bilgi ver.”
