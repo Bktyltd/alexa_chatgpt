@@ -1,16 +1,16 @@
 # Alexa ChatGPT Skill
 
-This project provides a **Flask-based Alexa Skill** that integrates with **OpenAI’s GPT models**.  
-It allows you to ask Alexa natural language questions (in English or Turkish), and get real-time answers powered by ChatGPT.
+This project provides a **Flask-based backend** for an **Amazon Alexa Skill** that integrates with **OpenAI’s GPT models**.  
+It enables Alexa to handle free-form conversations by forwarding user queries to ChatGPT and returning intelligent responses.
 
 ---
 
 ##  Features
-- Alexa Skill endpoint built with Flask.
-- Integration with OpenAI’s GPT (currently using `gpt-4o-mini`).
-- Supports both **English and Turkish** queries.
-- Maintains **session-based conversation history** for more natural interactions.
-- Includes `/health` and `/alexa-chat/health` endpoints for monitoring.
+- Flask-based Alexa Skill endpoint with JSON response format.
+- Integration with OpenAI GPT models (`gpt-4o-mini` by default).
+- Session-based conversation history for natural multi-turn interactions.
+- `/health` and `/alexa-chat/health` endpoints for monitoring and debugging.
+- Works seamlessly with **Cloudflare Tunnel** for secure HTTPS exposure.
 
 ---
 
