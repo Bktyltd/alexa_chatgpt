@@ -5,7 +5,7 @@ It allows you to ask Alexa natural language questions (in English or Turkish), a
 
 ---
 
-## 🚀 Features
+##  Features
 - Alexa Skill endpoint built with Flask.
 - Integration with OpenAI’s GPT (currently using `gpt-4o-mini`).
 - Supports both **English and Turkish** queries.
@@ -14,7 +14,7 @@ It allows you to ask Alexa natural language questions (in English or Turkish), a
 
 ---
 
-## 📦 Requirements
+##  Requirements
 The required dependencies are listed in `requirements.txt`:
 
 ```txt
