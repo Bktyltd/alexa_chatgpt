@@ -1,161 +1,361 @@
 {
-  "interactionModel": {
-    "languageModel": {
-      "invocationName": "my chat",
-      "intents": [
-        {
-          "name": "ChatIntent",
-          "slots": [
-            {
-              "name": "UserInput",
-              "type": "AMAZON.SearchQuery"
-            }
-          ],
-          "samples": [
-            "chat about {UserInput}",
-            "talk about {UserInput}",
-            "discuss {UserInput}",
-            "what is {UserInput}",
-            "who is {UserInput}",
-            "tell me about {UserInput}",
-            "explain {UserInput}",
-            "define {UserInput}",
-            "describe {UserInput}",
-            "give me information about {UserInput}",
-            "can you explain {UserInput}",
-            "how about {UserInput}",
-            "what about {UserInput}",
-            "i want to know about {UserInput}",
-            "tell me the history of {UserInput}",
-            "history of {UserInput}",
-            "what does {UserInput} mean",
-            "tell me more about {UserInput}",
-            "briefly explain {UserInput}",
-            "what is {UserInput} used for",
-            "give me examples of {UserInput}",
-            "examples of {UserInput}",
-            "translate {UserInput} to english",
-            "translate {UserInput} to spanish",
-            "translate {UserInput} to french",
-            "translate {UserInput} to german",
-            "how to use {UserInput}",
-            "how to make {UserInput}",
-            "advantages of {UserInput}",
-            "disadvantages of {UserInput}",
-            "benefits of {UserInput}",
-            "drawbacks of {UserInput}",
-            "pros and cons of {UserInput}",
-            "summarize {UserInput}",
-            "what is the weather in {UserInput}",
-            "weather in {UserInput}",
-            "tell me the news about {UserInput}",
-            "news about {UserInput}",
-            "latest developments in {UserInput}",
-            "recent news about {UserInput}",
-            "recommend me food in {UserInput}",
-            "tell me sports news about {UserInput}",
-            "sports news about {UserInput}",
-            "show me tourist attractions in {UserInput}",
-            "tourist spots in {UserInput}",
-            "places to visit in {UserInput}",
-            "what should I eat in {UserInput}",
-            "how do I cook {UserInput}",
-            "how to cook {UserInput}",
-            "recipe for {UserInput}",
-            "cooking instructions for {UserInput}",
-            "recipe suggestions for {UserInput}",
-            "recommendations for {UserInput}",
-            "your thoughts on {UserInput}",
-            "compare {UserInput}",
-            "analyze {UserInput}",
-            "review {UserInput}",
-            "evaluate {UserInput}",
-            "research {UserInput}",
-            "investigate {UserInput}",
-            "explore {UserInput}",
-            "study {UserInput}",
-            "examine {UserInput}",
-            "understand {UserInput}",
-            "learn about {UserInput}",
-            "find out about {UserInput}",
-            "discover {UserInput}",
-            "show me {UserInput}",
-            "list {UserInput}",
-            "provide {UserInput}",
-            "suggest {UserInput}",
-            "recommend {UserInput}",
-            "help me with {UserInput}",
-            "assist with {UserInput}",
-            "guide me through {UserInput}",
-            "walk me through {UserInput}",
-            "break down {UserInput}",
-            "simplify {UserInput}",
-            "elaborate on {UserInput}",
-            "expand on {UserInput}",
-            "details about {UserInput}",
-            "facts about {UserInput}",
-            "information on {UserInput}",
-            "what is artificial intelligence",
-            "explain machine learning",
-            "how does blockchain work",
-            "what is quantum computing",
-            "tell me about {UserInput} technology",
-            "how does {UserInput} work",
-            "future of {UserInput}",
-            "trends in {UserInput}",
-            "latest in {UserInput}",
-            "updates on {UserInput}",
-            "hi",
-            "hello",
-            "how are you",
-            "what's up",
-            "good morning",
-            "good afternoon",
-            "good evening",
-            "good night",
-            "goodbye",
-            "see you later"
-          ]
-        },
-        {
-          "name": "AMAZON.FallbackIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": [
-            "cancel",
-            "never mind",
-            "forget it"
-          ]
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": [
-            "help",
-            "what can you do",
-            "how do I use this",
-            "instructions",
-            "guide me",
-            "what are your features"
-          ]
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": [
-            "stop",
-            "exit",
-            "quit",
-            "end session",
-            "close"
-          ]
-        },
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": []
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "my chat",
+            "intents": [
+                {
+                    "name": "ChatIntent",
+                    "slots": [
+                        {
+                            "name": "UserInput",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "tell me about {UserInput}",
+                        "what is {UserInput}",
+                        "explain {UserInput}",
+                        "define {UserInput}",
+                        "describe {UserInput}",
+                        "give me information about {UserInput}",
+                        "can you explain {UserInput}",
+                        "what about {UserInput}",
+                        "how to make {UserInput}",
+                        "how to use {UserInput}",
+                        "advantages of {UserInput}",
+                        "disadvantages of {UserInput}",
+                        "summarize {UserInput}",
+                        "compare {UserInput}",
+                        "analyze {UserInput}",
+                        "review {UserInput}",
+                        "explore {UserInput}",
+                        "help me with {UserInput}",
+                        "I need help with {UserInput}",
+                        "can you help me understand {UserInput}",
+                        "show me how to {UserInput}",
+                        "teach me about {UserInput}"
+                    ]
+                },
+                {
+                    "name": "CookingIntent",
+                    "slots": [
+                        {
+                            "name": "Food",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "how do I cook {Food}",
+                        "recipe for {Food}",
+                        "cooking instructions for {Food}",
+                        "how to make {Food}",
+                        "cooking time for {Food}",
+                        "ingredients for {Food}",
+                        "how long to cook {Food}",
+                        "cooking temperature for {Food}",
+                        "baking instructions for {Food}",
+                        "show me a recipe for {Food}"
+                    ]
+                },
+                {
+                    "name": "HealthWellnessIntent",
+                    "slots": [
+                        {
+                            "name": "HealthTopic",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "health benefits of {HealthTopic}",
+                        "is {HealthTopic} good for health",
+                        "symptoms of {HealthTopic}",
+                        "how to prevent {HealthTopic}",
+                        "tell me about {HealthTopic} for health",
+                        "nutrition facts about {HealthTopic}",
+                        "calories in {HealthTopic}",
+                        "exercise for {HealthTopic}",
+                        "home remedies for {HealthTopic}"
+                    ]
+                },
+                {
+                    "name": "TechnologyHelpIntent",
+                    "slots": [
+                        {
+                            "name": "TechItem",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "how to use {TechItem}",
+                        "setup instructions for {TechItem}",
+                        "troubleshoot {TechItem}",
+                        "features of {TechItem}",
+                        "how to connect {TechItem}",
+                        "installation guide for {TechItem}",
+                        "{TechItem} not working",
+                        "configure {TechItem}",
+                        "update {TechItem}"
+                    ]
+                },
+                {
+                    "name": "WeatherIntent",
+                    "slots": [],
+                    "samples": [
+                        "what's the weather today",
+                        "weather forecast",
+                        "is it going to rain",
+                        "temperature today",
+                        "weather conditions",
+                        "should I take an umbrella",
+                        "what should I wear today"
+                    ]
+                },
+                {
+                    "name": "LearningIntent",
+                    "slots": [
+                        {
+                            "name": "Subject",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "teach me {Subject}",
+                        "learn about {Subject}",
+                        "explain {Subject} simply",
+                        "basics of {Subject}",
+                        "introduction to {Subject}",
+                        "beginner guide to {Subject}",
+                        "study {Subject}",
+                        "facts about {Subject}"
+                    ]
+                },
+                {
+                    "name": "NewsIntent",
+                    "slots": [
+                        {
+                            "name": "NewsType",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "latest news about {NewsType}",
+                        "news update on {NewsType}",
+                        "what's happening with {NewsType}",
+                        "current events about {NewsType}",
+                        "recent developments in {NewsType}",
+                        "breaking news on {NewsType}"
+                    ]
+                },
+                {
+                    "name": "ShoppingAdviceIntent",
+                    "slots": [
+                        {
+                            "name": "Product",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "best {Product} to buy",
+                        "reviews for {Product}",
+                        "compare {Product}",
+                        "should I buy {Product}",
+                        "features of {Product}",
+                        "price range for {Product}",
+                        "pros and cons of {Product}",
+                        "recommendations for {Product}"
+                    ]
+                },
+                {
+                    "name": "TravelIntent",
+                    "slots": [
+                        {
+                            "name": "Destination",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "travel guide for {Destination}",
+                        "things to do in {Destination}",
+                        "best time to visit {Destination}",
+                        "attractions in {Destination}",
+                        "travel tips for {Destination}",
+                        "culture of {Destination}",
+                        "food in {Destination}",
+                        "budget for {Destination}"
+                    ]
+                },
+                {
+                    "name": "HomeImprovementIntent",
+                    "slots": [
+                        {
+                            "name": "HomeProject",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "how to {HomeProject}",
+                        "how do I {HomeProject}",
+                        "how I {HomeProject}",
+                        "DIY {HomeProject}",
+                        "tools needed for {HomeProject}",
+                        "cost of {HomeProject}",
+                        "steps to {HomeProject}",
+                        "materials for {HomeProject}",
+                        "instructions for {HomeProject}",
+                        "tips for {HomeProject}",
+                        "guide for {HomeProject}",
+                        "tutorial for {HomeProject}",
+                        "help with {HomeProject}",
+                        "method to {HomeProject}",
+                        "way to {HomeProject}"
+                    ]
+                },
+                {
+                    "name": "GreetingIntent",
+                    "slots": [],
+                    "samples": [
+                        "hi",
+                        "hello",
+                        "hey",
+                        "how are you",
+                        "good morning",
+                        "good afternoon",
+                        "good evening",
+                        "good night",
+                        "what's up",
+                        "how's it going"
+                    ]
+                },
+                {
+                    "name": "FarewellIntent",
+                    "slots": [],
+                    "samples": [
+                        "goodbye",
+                        "see you later",
+                        "bye",
+                        "talk to you later",
+                        "until next time",
+                        "catch you later"
+                    ]
+                },
+                {
+                    "name": "PrintIntent",
+                    "slots": [],
+                    "samples": [
+                        "print the answer",
+                        "send this to printer",
+                        "print response",
+                        "print that",
+                        "send to printer",
+                        "print last response",
+                        "can you print this",
+                        "print the information",
+                        "I want to print this",
+                        "print what you just said"
+                    ]
+                },
+                {
+                    "name": "PrintCheckIntent",
+                    "slots": [],
+                    "samples": [
+                        "is printer connected",
+                        "check printer status",
+                        "can you print",
+                        "printer available",
+                        "is printing possible",
+                        "do I have a printer"
+                    ]
+                },
+                {
+                    "name": "RepeatIntent",
+                    "slots": [],
+                    "samples": [
+                        "repeat that",
+                        "say that again",
+                        "can you repeat",
+                        "what did you say",
+                        "repeat please",
+                        "say it again",
+                        "one more time"
+                    ]
+                },
+                {
+                    "name": "QuickFactIntent",
+                    "slots": [
+                        {
+                            "name": "FactTopic",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "quick fact about {FactTopic}",
+                        "interesting fact about {FactTopic}",
+                        "fun fact about {FactTopic}",
+                        "did you know {FactTopic}",
+                        "random fact about {FactTopic}",
+                        "tell me something interesting about {FactTopic}"
+                    ]
+                },
+                {
+                    "name": "CalculateIntent",
+                    "slots": [
+                        {
+                            "name": "Calculation",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "calculate {Calculation}",
+                        "what is {Calculation}",
+                        "solve {Calculation}",
+                        "compute {Calculation}",
+                        "math help with {Calculation}",
+                        "{Calculation} equals"
+                    ]
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "cancel",
+                        "never mind",
+                        "forget it",
+                        "abort"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "help",
+                        "what can you do",
+                        "how do I use this",
+                        "instructions",
+                        "guide me",
+                        "what are your features",
+                        "how does this work",
+                        "show me what you can do"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "stop",
+                        "exit",
+                        "quit",
+                        "end session",
+                        "close",
+                        "that's all"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
         }
-      ],
-      "types": []
     }
-  }
 }
